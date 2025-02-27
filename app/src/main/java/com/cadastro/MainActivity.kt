@@ -1,6 +1,7 @@
 package com.cadastro.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -11,10 +12,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cadastro.Estados
+import com.cadastro.Formulario
 import com.cadastro.Sexo
 
 class MainActivity : ComponentActivity() {
@@ -28,6 +31,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun FormularioUI() {
+    val context = LocalContext.current
     var nome by remember { mutableStateOf("") }
     var telefone by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -66,7 +70,10 @@ fun FormularioUI() {
             BotaoFormulario("Limpar", Color.Magenta) {
                 nome = ""; telefone = ""; email = ""; sexo = Sexo.MASCULINO; cidade = ""; estado = Estados.AC
             }
-            BotaoFormulario("Salvar", Color.Blue) {}
+            BotaoFormulario("Salvar", Color.Blue) {
+                val formulario = Formulario(nome, telefone, email, sexo, cidade, estado)
+                Toast.makeText(context, formulario.toString(), Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
